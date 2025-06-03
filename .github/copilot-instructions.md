@@ -12,6 +12,7 @@ applyTo: "**"
 - Use a **minimalistic visual approach**. The primary color palette must be **white, blue, and black**.
 - Use a **sans-serif font** for a clean and modern look.
 - Use **Tailwind CSS v4** for all styling. Use utility classes in favor of custom CSS unless strictly necessary.
+- Use lucide [astro icons](https://lucide.dev/guide/packages/lucide-astro) for all icons.
 - Design with a **mobile-first** philosophy: prioritize layout, spacing, and readability on small screens before scaling up.
 - This project uses **TypeScript** for type safety and improved tooling. Always define types and interfaces where relevant.
 - Follow **semantic HTML** best practices (`<header>`, `<main>`, `<section>`, etc.).

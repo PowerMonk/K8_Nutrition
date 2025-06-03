@@ -1,0 +1,57 @@
+---
+import { Star, ShieldCheck, Award } from "@lucide/astro";
+
+// Feature cards data for better maintainability
+const featureCards = [
+  {
+    icon: Star,
+    title: "Calidad garantizada",
+    description: "Solo trabajamos con marcas reconocidas por su compromiso con ingredientes de alta calidad."
+  },
+  {
+    icon: ShieldCheck,
+    title: "Seguridad y eficacia",
+    description: "Todos los productos cuentan con pruebas y certificaciones de sus fabricantes."
+  },
+  {
+    icon: Award,
+    title: "Respaldados por expertos",
+    description: "Seleccionamos marcas creadas por profesionales de la nutrición y el deporte."
+  }
+];
+---
+
+<!-- Feature Cards Section -->
+<section class="bg-white py-16 sm:py-20 px-4 sm:px-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-6">
+      {featureCards.map((feature, index) => {
+        const IconComponent = feature.icon;
+        
+        return (
+          <div class={`text-center p-6 bg-white border border-gray-100 rounded-lg shadow-md transition-shadow duration-300 ${
+            index === 2 ? 'sm:col-span-2 sm:mx-auto sm:max-w-md md:col-span-1 md:mx-0 md:max-w-none' : ''
+          }`}>
+            <!-- Icon Container -->
+            <div class="flex justify-center mb-4">
+              <div class="p-3 bg-blue-50 rounded-full">
+                <IconComponent class="h-8 w-8 text-blue-600" />
+              </div>
+            </div>
+            
+            <!-- Card Title -->
+            <h3 class="text-lg font-semibold text-black mb-3 font-sans">
+              {feature.title}
+            </h3>
+            
+            <!-- Card Description -->
+            <p class="text-gray-700 text-sm leading-relaxed font-sans">
+              {feature.description}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

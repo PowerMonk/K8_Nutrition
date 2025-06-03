@@ -1,0 +1,55 @@
+---
+export interface FeaturedProductCardProps {
+  title: string;
+  subtitle: string;
+  price: number;
+  category: string;
+  image: string;
+  imageAlt?: string;
+}
+
+interface Props extends FeaturedProductCardProps {}
+
+const { title, subtitle, price, image, imageAlt = title } = Astro.props;
+
+// Format price with "Desde" prefix for featured products
+const formattedPrice = new Intl.NumberFormat("es-MX", {
+  style: "currency",
+  currency: "MXN",
+}).format(price);
+---
+
+<!-- Featured Product Card Component -->
+<div
+  class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 overflow-hidden"
+>
+  <!-- Product Image -->
+  <div class="aspect-square overflow-hidden">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="w-full h-full object-cover"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- Product Content -->
+  <div class="p-4">
+    <!-- Product Title -->
+    <h3 class="text-lg font-semibold text-black mb-1 font-sans line-clamp-2">
+      {title}
+    </h3>
+
+    <!-- Product Subtitle -->
+    <p class="text-sm text-gray-600 mb-3 font-sans line-clamp-2">
+      {subtitle}
+    </p>
+
+    <!-- Product Price with "Desde" prefix -->
+    <div class="flex items-center justify-between">
+      <span class="text-xl font-bold text-black font-sans">
+        Desde {formattedPrice}
+      </span>
+    </div>
+  </div>
+</div>
