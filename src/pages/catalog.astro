@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProductCatalog from "../components/ProductCatalog.svelte";
+
+// Sample products data - replace with your actual data source
+const products = [
+  {
+    title: "Proteína Whey Premium",
+    subtitle: "Proteína de suero concentrada para construcción muscular",
+    price: 899,
+    category: "Proteína",
+    image: "/assets/protein-image.jpg",
+    imageAlt: "Proteína Whey Premium",
+  },
+  {
+    title: "Pre Workout Energía",
+    subtitle: "Fórmula avanzada para máximo rendimiento",
+    price: 649,
+    category: "Pre-Workout",
+    image: "/assets/preworkout-image.jpg",
+    imageAlt: "Pre Workout Energía",
+  },
+  {
+    title: "Creatina Monohidrato",
+    subtitle: "Creatina pura para fuerza y potencia muscular",
+    price: 449,
+    category: "Creatina",
+    image: "/assets/creatine-image.jpg",
+    imageAlt: "Creatina Monohidrato",
+  },
+  {
+    title: "BCAA Ultra",
+    subtitle: "Aminoácidos esenciales para recuperación muscular",
+    price: 589,
+    category: "Aminoácidos",
+    image: "/assets/bcaa-image.jpg",
+    imageAlt: "BCAA Ultra",
+  },
+  {
+    title: "Glutamina Pure",
+    subtitle: "L-Glutamina para recuperación y sistema inmune",
+    price: 399,
+    category: "Aminoácidos",
+    image: "/assets/glutamine-image.jpg",
+    imageAlt: "Glutamina Pure",
+  },
+  {
+    title: "Mass Gainer Pro",
+    subtitle: "Ganador de peso con proteínas y carbohidratos",
+    price: 1299,
+    category: "Proteína",
+    image: "/assets/mass-gainer-image.jpg",
+    imageAlt: "Mass Gainer Pro",
+  },
+];
+
+// Extract unique categories and brands for filter options
+const categories = [...new Set(products.map((product) => product.category))];
+const brands = [
+  "Optimum Nutrition",
+  "Dymatize",
+  "BSN",
+  "MuscleTech",
+  "Cellucor",
+];
+---
+
+<BaseLayout content={{ title: "K8 Nutrition - Catálogo" }}>
+  <main class="bg-gray-50 min-h-screen">
+    <div class="py-16 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+      <!-- Page Header -->
+      <header class="text-center mb-12">
+        <h1 class="text-4xl sm:text-5xl font-bold text-black mb-4 font-sans">
+          Nuestro Catálogo
+        </h1>
+        <p
+          class="text-xl text-gray-700 max-w-3xl mx-auto font-sans leading-relaxed"
+        >
+          Encuentra el suplemento ideal para ti, justo aquí.
+        </p>
+      </header>
+
+      <!-- Interactive Product Catalog Component -->
+      <ProductCatalog
+        products={products}
+        categories={categories}
+        brands={brands}
+        client:load
+      />
+    </div>
+  </main>
+</BaseLayout>

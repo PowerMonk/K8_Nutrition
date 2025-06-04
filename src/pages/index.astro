@@ -1,12 +1,12 @@
 ---
 import "../styles/global.css";
-import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import FeatureCards from "../components/FeatureCards.astro";
 import FeaturedProducts from "../components/FeaturedProducts.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
+<!-- <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -19,4 +19,9 @@ import FeaturedProducts from "../components/FeaturedProducts.astro";
   <Hero />
   <FeatureCards />
   <FeaturedProducts />
-</html>
+</html> -->
+<BaseLayout content={{ title: "K8 Nutrition - Home" }}>
+  <Hero />
+  <FeatureCards />
+  <FeaturedProducts />
+</BaseLayout>
