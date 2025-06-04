@@ -7,12 +7,15 @@ applyTo: "**"
 - Use descriptive and consistent variable names that clearly indicate their purpose (e.g., `productList` instead of `data1`).
 - This project is a modern, minimalistic website for my retail supplement brand, **K8 Nutrition**.
 - The site is built using **Astro** for performance and flexibility. Use **island architecture** only where interactivity is required.
-- If a framework is needed for islands, prefer **Svelte** or fallback to plain **TypeScript/JavaScript**.
+- If a framework is needed for islands, prefer **Svelte** (v5) or fallback to plain **TypeScript/JavaScript**.
+- Use **Svelte 5** syntax and APIs — consult the project's `llms.txt` file for up-to-date practices.
+  - Prefer `signal`, `derived`, and `emit` from `svelte/runtime` over deprecated APIs like `createEventDispatcher`.
+  - Follow the rune-based reactivity model described in the [`llms.txt`](./llms.txt) guidance.
 - Prefer **functional components** for reusability, but avoid unnecessary over-abstraction or deeply nested components.
 - Use a **minimalistic visual approach**. The primary color palette must be **white, blue, and black**.
 - Use a **sans-serif font** for a clean and modern look.
 - Use **Tailwind CSS v4** for all styling. Use utility classes in favor of custom CSS unless strictly necessary.
-- Use lucide [astro icons](https://lucide.dev/guide/packages/lucide-astro) for all icons.
+- Use Lucide [Astro icons](https://lucide.dev/guide/packages/lucide-astro) for all icons.
 - Design with a **mobile-first** philosophy: prioritize layout, spacing, and readability on small screens before scaling up.
 - This project uses **TypeScript** for type safety and improved tooling. Always define types and interfaces where relevant.
 - Follow **semantic HTML** best practices (`<header>`, `<main>`, `<section>`, etc.).
