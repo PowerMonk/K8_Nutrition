@@ -1,0 +1,206 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { MapPin, Phone, Mail, Truck } from "@lucide/astro";
+---
+
+<BaseLayout content={{ title: "Contacto - K8 Nutrition" }}>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-black mb-4 font-sans">Contáctanos</h1>
+      <p class="text-lg text-gray-600 font-sans max-w-2xl mx-auto">
+        ¿Tienes preguntas? Estamos aquí para ayudarte.
+      </p>
+    </div>
+
+    <!-- Contact Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Left Column: Contact Cards -->
+      <div class="space-y-6">
+        <!-- Location Card -->
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+        >
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <div
+                class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"
+              >
+                <MapPin class="h-6 w-6 text-blue-600" />
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-black mb-2 font-sans">
+                Ubicación
+              </h3>
+              <p class="text-gray-600 font-sans">
+                Uruapan, Michoacán<br />
+                México
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone Card -->
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+        >
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <div
+                class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"
+              >
+                <Phone class="h-6 w-6 text-blue-600" />
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-black mb-2 font-sans">
+                Teléfono
+              </h3>
+              <a
+                href="tel:+524521234567"
+                class="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-sans"
+              >
+                +52 452 123 4567
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Card -->
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+        >
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <div
+                class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"
+              >
+                <Mail class="h-6 w-6 text-blue-600" />
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-black mb-2 font-sans">
+                Email
+              </h3>
+              <a
+                href="mailto:contacto@k8nutrition.com"
+                class="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-sans"
+              >
+                contacto@k8nutrition.com
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipping Card -->
+        <div
+          class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+        >
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <div
+                class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"
+              >
+                <Truck class="h-6 w-6 text-blue-600" />
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-black mb-2 font-sans">
+                Envíos
+              </h3>
+              <p class="text-gray-600 font-sans leading-relaxed">
+                ¡Estamos trabajando para habilitar pedidos en línea! Mantente
+                actualizado en nuestras redes para enterarte cuando estén
+                disponibles.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Contact Form -->
+      <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
+        <h2 class="text-2xl font-bold text-black mb-6 font-sans">
+          Envíanos un mensaje
+        </h2>
+
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          class="space-y-6"
+          netlify-honeypot="bot-field"
+        >
+          <!-- Hidden input for Netlify form detection -->
+          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="bot-field" />
+
+          <!-- Name Field -->
+          <div>
+            <label
+              for="name"
+              class="block text-sm font-medium text-black mb-2 font-sans"
+            >
+              Tu nombre
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black placeholder-gray-500 font-sans text-base"
+              placeholder="Ingresa tu nombre completo"
+            />
+          </div>
+
+          <!-- Email Field -->
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium text-black mb-2 font-sans"
+            >
+              Tu correo
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black placeholder-gray-500 font-sans text-base"
+              placeholder="tu@email.com"
+            />
+          </div>
+
+          <!-- Message Field -->
+          <div>
+            <label
+              for="message"
+              class="block text-sm font-medium text-black mb-2 font-sans"
+            >
+              ¿Cómo podemos ayudarte?
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black placeholder-gray-500 font-sans text-base resize-vertical"
+              placeholder="Cuéntanos sobre tu consulta o comentario..."
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div>
+            <button
+              type="submit"
+              class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium font-sans text-base hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+            >
+              Enviar mensaje
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
