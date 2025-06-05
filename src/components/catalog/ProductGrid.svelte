@@ -1,7 +1,7 @@
 <script lang="ts">
   import ProductCardItem from '../ProductCardItem.svelte';
   
-  // Define product interface
+  // Define product interface to match the real data structure
   interface Product {
     title: string;
     subtitle: string;
@@ -9,6 +9,7 @@
     category: string;
     image: string;
     imageAlt: string;
+    brand: string;
   }
   
   export let products: Product[] = [];
