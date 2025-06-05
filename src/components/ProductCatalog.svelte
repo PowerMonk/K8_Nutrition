@@ -8,7 +8,7 @@
   import ProductGrid from './catalog/ProductGrid.svelte';
   import EmptyState from './catalog/EmptyState.svelte';
   
-  // Define product interface
+  // Define product interface to match the real data structure
   interface Product {
     title: string;
     subtitle: string;
@@ -16,6 +16,7 @@
     category: string;
     image: string;
     imageAlt: string;
+    brand: string;
   }
 
   // Component props
@@ -54,12 +55,13 @@
       .replace(/[\u0300-\u036f]/g, ''); // Remove diacritics/accents
   };
 
-  // Reactive filter function
+  // Reactive filter function with working brand filtering
   $: {
     filteredProducts = products.filter((product) => {
       const normalizedTitle = normalizeText(product.title);
       const normalizedSubtitle = normalizeText(product.subtitle);
       const normalizedCategory = normalizeText(product.category);
+      const normalizedBrand = normalizeText(product.brand);
       const normalizedSearchTerm = normalizeText(searchTerm.trim());
 
       const matchesSearch = !normalizedSearchTerm || 
@@ -69,8 +71,8 @@
       const matchesCategory = !selectedCategory || 
         normalizedCategory === normalizeText(selectedCategory);
 
-      // Note: Brand filtering would need product data to include brand information
-      const matchesBrand = !selectedBrand; // Simplified for now
+      const matchesBrand = !selectedBrand || 
+        normalizedBrand === normalizeText(selectedBrand);
 
       return matchesSearch && matchesCategory && matchesBrand;
     });
