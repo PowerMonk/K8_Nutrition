@@ -9,8 +9,35 @@ applyTo: "**"
 - The site is built using **Astro** for performance and flexibility. Use **island architecture** only where interactivity is required.
 - If a framework is needed for islands, prefer **Svelte** (v5) or fallback to plain **TypeScript/JavaScript**.
 - Use **Svelte 5** syntax and APIs — consult the project's `llms.txt` file for up-to-date practices.
+
   - Prefer `signal`, `derived`, and `emit` from `svelte/runtime` over deprecated APIs like `createEventDispatcher`.
   - Follow the rune-based reactivity model described in the [`llms.txt`](./llms.txt) guidance.
+  - Use `load()` or equivalent caching strategies to avoid unnecessary Supabase queries on every page visit.
+
+- When querying Supabase, **only request the fields necessary** to display the product data on the current view to reduce bandwidth usage.
+  - Example: `name`, `brand`, `flavor`, `category`, `size`, `price`, `stock`, `description`, `imageurl`, `imagealt`,
+- Supabase is used as the backend database. The `products` table has the following schema:
+
+  ```sql
+  CREATE TABLE public.products (
+    id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
+    name text NOT NULL,
+    brand text NOT NULL,
+    flavor text,
+    category text NOT NULL,
+    size text NOT NULL,
+    price numeric NOT NULL,
+    stock smallint NOT NULL,
+    fragile boolean NOT NULL,
+    description text NOT NULL,
+    imageurl text NOT NULL UNIQUE,
+    imagealt text NOT NULL,
+    active boolean NOT NULL,
+    CONSTRAINT products_pkey PRIMARY KEY (id)
+  );
+  ```
+
+- Cloudinary is used for image delivery via CDN. Images should be linked via the imageurl field in Supabase, which stores the Cloudinary URLs.
 - Prefer **functional components** for reusability, but avoid unnecessary over-abstraction or deeply nested components.
 - Use a **minimalistic visual approach**. The primary color palette must be **white, blue, and black**.
 - Use a **sans-serif font** for a clean and modern look.

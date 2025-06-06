@@ -1,17 +1,14 @@
 <script lang="ts">
-  // Product props
-  export let title: string;
-//   export let subtitle: string = '';
-  export let price: number;
-  export let category: string;
-  export let image: string;
-  export let imageAlt: string = title;
+  import type { ProductDisplay } from '../types/productType';
+
+  // Product props - expect a ProductDisplay object
+  export let product: ProductDisplay;
 
   // Format price for display
   const formattedPrice = new Intl.NumberFormat("es-MX", {
     style: "currency",
     currency: "MXN",
-  }).format(price);
+  }).format(product.price);
 </script>
 
 <!-- Product Card Component with consistent height -->
@@ -19,8 +16,8 @@
   <!-- Product Image -->
   <div class="aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
     <img
-      src={image}
-      alt={imageAlt}
+      src={product.imageurl}
+      alt={product.imagealt}
       class="w-full h-full object-contain"
       loading="lazy"
     />
@@ -30,7 +27,7 @@
   <div class="p-4 flex flex-col flex-grow">
     <!-- Product Title with consistent height -->
     <h3 class="text-lg font-semibold mb-4 text-black font-sans line-clamp-2 flex items-start">
-      {title}
+      {product.displayName}
     </h3>
 
     <!-- Spacer to push price section to bottom -->
@@ -43,7 +40,7 @@
       </span>
       <!-- Category Badge with smaller size -->
       <span class="inline-block px-2 py-2 text-xs font-medium font-sans bg-blue-50 text-blue-600 rounded-full shrink-0">
-        {category}
+        {product.category}
       </span>
     </div>
   </div>
