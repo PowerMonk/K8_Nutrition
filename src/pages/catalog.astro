@@ -1,11 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProductCatalog from "../components/ProductCatalog.svelte";
-import { products } from "../../products-data/products.ts";
+import { getAllProducts, getProductFilters } from "../lib/products.ts";
 
-// Extract unique categories and brands from actual product data
-const categories = [...new Set(products.map((product) => product.category))];
-const brands = [...new Set(products.map((product) => product.brand))];
+// Fetch products and filters from Supabase
+const products = await getAllProducts();
+const filters = await getProductFilters();
 ---
 
 <BaseLayout content={{ title: "Catálogo - K8 Nutrition" }}>
@@ -22,12 +22,11 @@ const brands = [...new Set(products.map((product) => product.brand))];
           Encuentra el suplemento ideal para ti, justo aquí.
         </p>
       </header>
-
       <!-- Interactive Product Catalog Component -->
       <ProductCatalog
         products={products}
-        categories={categories}
-        brands={brands}
+        categories={filters.categories}
+        brands={filters.brands}
         client:load
       />
     </div>

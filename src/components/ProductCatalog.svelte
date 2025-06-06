@@ -7,20 +7,10 @@
   import ClearFiltersButton from './catalog/ClearFiltersButton.svelte';
   import ProductGrid from './catalog/ProductGrid.svelte';
   import EmptyState from './catalog/EmptyState.svelte';
+  import type { ProductDisplay } from '../types/productType';
   
-  // Define product interface to match the real data structure
-  interface Product {
-    title: string;
-    subtitle: string;
-    price: number;
-    category: string;
-    image: string;
-    imageAlt: string;
-    brand: string;
-  }
-
   // Component props
-  export let products: Product[] = [];
+  export let products: ProductDisplay[] = [];
   export let categories: string[] = [];
   export let brands: string[] = [];
 
@@ -28,7 +18,7 @@
   let searchTerm = '';
   let selectedCategory = '';
   let selectedBrand = '';
-  let filteredProducts: Product[] = [];
+  let filteredProducts: ProductDisplay[] = [];
   let isBigScreen = false;
   let filterIsBig = false;
 
@@ -55,24 +45,24 @@
       .replace(/[\u0300-\u036f]/g, ''); // Remove diacritics/accents
   };
 
-  // Reactive filter function with working brand filtering
+  // Reactive filter function with working brand filtering and proper trimming
   $: {
     filteredProducts = products.filter((product) => {
-      const normalizedTitle = normalizeText(product.title);
-      const normalizedSubtitle = normalizeText(product.subtitle);
-      const normalizedCategory = normalizeText(product.category);
-      const normalizedBrand = normalizeText(product.brand);
+      const normalizedTitle = normalizeText(product.displayName);
+      // const normalizedSubtitle = normalizeText(product.displaySubtitle);
+      const normalizedCategory = normalizeText(product.category.trim());
+      const normalizedBrand = normalizeText(product.brand.trim());
       const normalizedSearchTerm = normalizeText(searchTerm.trim());
 
       const matchesSearch = !normalizedSearchTerm || 
-        normalizedTitle.includes(normalizedSearchTerm) || 
-        normalizedSubtitle.includes(normalizedSearchTerm);
+        normalizedTitle.includes(normalizedSearchTerm); 
+        // || normalizedSubtitle.includes(normalizedSearchTerm);
 
       const matchesCategory = !selectedCategory || 
-        normalizedCategory === normalizeText(selectedCategory);
+        normalizedCategory === normalizeText(selectedCategory.trim());
 
       const matchesBrand = !selectedBrand || 
-        normalizedBrand === normalizeText(selectedBrand);
+        normalizedBrand === normalizeText(selectedBrand.trim());
 
       return matchesSearch && matchesCategory && matchesBrand;
     });
