@@ -33,3 +33,18 @@ export interface ProductFilters {
   categories: string[];
   brands: string[];
 }
+
+/**
+ * Grouped product interface for modal display
+ * Groups products with the same base name but different flavors/sizes
+ */
+export interface GroupedProduct {
+  id: string; // unique identifier for the group
+  name: string; // base product name
+  products: Product[]; // all product variations
+  category: string; // primary category
+  brand: string; // primary brand
+  imageurl: string; // primary image for card display
+  imagealt: string; // primary alt text
+  basePrice: number; // lowest price in the group
+}
