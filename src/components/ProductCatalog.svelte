@@ -1,13 +1,13 @@
 <script lang="ts">
     // Schedules a function to run as soon as the component has been mounted to the DOM. 
     // Unlike $effect, the provided function only runs once.
-  import { onMount } from 'svelte';
-  import SearchBar from './catalog/SearchBar.svelte';
+  import { onMount } from 'svelte';  import SearchBar from './catalog/SearchBar.svelte';
   import FilterSection from './catalog/FilterSection.svelte';
   import ClearFiltersButton from './catalog/ClearFiltersButton.svelte';
   import ProductGrid from './catalog/ProductGrid.svelte';
   import EmptyState from './catalog/EmptyState.svelte';
-  import type { ProductDisplay } from '../types/productType';
+  import type { ProductDisplay, GroupedProduct } from '../types/productType';
+  import { groupProducts, searchGroupedProducts, filterGroupedProducts } from '../lib/products';
   
   // Component props
   export let products: ProductDisplay[] = [];
@@ -18,7 +18,8 @@
   let searchTerm = '';
   let selectedCategory = '';
   let selectedBrand = '';
-  let filteredProducts: ProductDisplay[] = [];
+  let groupedProducts: GroupedProduct[] = [];
+  let filteredGroupedProducts: GroupedProduct[] = [];
   let isBigScreen = false;
   let filterIsBig = false;
 
@@ -36,36 +37,23 @@
       window.removeEventListener('resize', checkScreenSize);
     };
   });
-
-  // Utility function to normalize text (remove accents and convert to lowercase)
-  const normalizeText = (text: string): string => {
-    return text
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, ''); // Remove diacritics/accents
-  };
+  // Group products when component mounts or products change
+  $: {
+    groupedProducts = groupProducts(products);
+  }
 
   // Reactive filter function with working brand filtering and proper trimming
   $: {
-    filteredProducts = products.filter((product) => {
-      const normalizedTitle = normalizeText(product.displayName);
-      // const normalizedSubtitle = normalizeText(product.displaySubtitle);
-      const normalizedCategory = normalizeText(product.category.trim());
-      const normalizedBrand = normalizeText(product.brand.trim());
-      const normalizedSearchTerm = normalizeText(searchTerm.trim());
+    // Start with all grouped products
+    let filtered = [...groupedProducts];
 
-      const matchesSearch = !normalizedSearchTerm || 
-        normalizedTitle.includes(normalizedSearchTerm); 
-        // || normalizedSubtitle.includes(normalizedSearchTerm);
+    // Apply search filter
+    if (searchTerm.trim()) {
+      filtered = searchGroupedProducts(filtered, searchTerm);
+    }
 
-      const matchesCategory = !selectedCategory || 
-        normalizedCategory === normalizeText(selectedCategory.trim());
-
-      const matchesBrand = !selectedBrand || 
-        normalizedBrand === normalizeText(selectedBrand.trim());
-
-      return matchesSearch && matchesCategory && matchesBrand;
-    });
+    // Apply category and brand filters
+    filteredGroupedProducts = filterGroupedProducts(filtered, selectedCategory, selectedBrand);
   }
 
   // Clear all filters
@@ -95,8 +83,8 @@
 </section>
 
 <!-- Products Display -->
-{#if filteredProducts.length > 0}
-  <ProductGrid products={filteredProducts} {isBigScreen} />
+{#if filteredGroupedProducts.length > 0}
+  <ProductGrid groupedProducts={filteredGroupedProducts} {isBigScreen} />
 {:else}
   <EmptyState 
     {searchTerm} 
