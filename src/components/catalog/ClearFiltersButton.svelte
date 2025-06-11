@@ -1,17 +1,21 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   
-  export let searchTerm: string = '';
-  export let selectedCategory: string = '';
-  export let selectedBrand: string = '';
+  interface Props {
+    searchTerm: string;
+    selectedCategory: string;
+    selectedBrand: string;
+    onclearfilters: () => void;
+  }
+
+  let { searchTerm = '', selectedCategory = '', selectedBrand = '', onclearfilters }: Props = $props();
   
-  const dispatch = createEventDispatcher();
+  // Using $derived rune instead of $: reactive statement
+  const hasActiveFilters = $derived(searchTerm || selectedCategory || selectedBrand);
   
+  // Function to handle clear filters - now calls the callback prop
   const clearFilters = () => {
-    dispatch('clearFilters');
+    onclearfilters?.();
   };
-  
-  $: hasActiveFilters = searchTerm || selectedCategory || selectedBrand;
 </script>
 
 <!-- Clear Filters Button -->
@@ -19,7 +23,7 @@
   <div class="text-center mt-4">
     <button
       type="button"
-      on:click={clearFilters}
+      onclick={clearFilters}
       class="text-sm text-blue-600 hover:text-blue-700 font-medium font-sans underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
     >
       Limpiar filtros

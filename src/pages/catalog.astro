@@ -6,6 +6,14 @@ import { getAllProducts, getProductFilters } from "../lib/products.ts";
 // Fetch products and filters from Supabase
 const products = await getAllProducts();
 const filters = await getProductFilters();
+
+// Get URL search parameters for pre-filtering
+const url = new URL(Astro.request.url);
+const initialCategory = url.searchParams.get("category") || "";
+const initialBrand = url.searchParams.get("brand") || "";
+
+// Debug log to verify we're getting the params
+console.log("Server-side URL params:", { initialCategory, initialBrand });
 ---
 
 <BaseLayout content={{ title: "Catálogo - K8 Nutrition" }}>
@@ -27,8 +35,18 @@ const filters = await getProductFilters();
         products={products}
         categories={filters.categories}
         brands={filters.brands}
+        initialCategory={initialCategory}
+        initialBrand={initialBrand}
         client:load
       />
+
+      <!-- Debug info (remove in production) -->
+      <script>
+        console.log("Client-side initial params:", {
+          category: new URLSearchParams(window.location.search).get("category"),
+          brand: new URLSearchParams(window.location.search).get("brand"),
+        });
+      </script>
     </div>
   </main>
 </BaseLayout>
