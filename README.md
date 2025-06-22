@@ -4,4 +4,4 @@
 - [Visit Tailwind wesbite & documentation](https://tailwindcss.com/)
 - [Visit Lucide website](https://lucide.dev/)
 
-Astro comes with Tailwind support out of the box. Get the template from the [offcial Astro repository](https://github.com/withastro/astro/tree/main/examples/with-tailwindcss).
+Click the link in the **about** section in the project to visit the website!
