@@ -41,19 +41,35 @@
       )
   );
 
-  // Get unique sizes from products using $derived
-  const sizes = $derived(
-    products
+  // Get available sizes for the currently selected flavor using $derived
+  const availableSizes = $derived(() => {
+    // If no flavor is selected or product has no flavor, show all sizes
+    if (!selectedProduct?.flavor) {
+      return products
+        .map(p => ({ size: p.size, product: p }))
+        .filter((item, index, self) =>
+          index === self.findIndex(t => t.size === item.size)
+        );
+    }
+    
+    // Filter products that match the currently selected flavor
+    const sameFlavorProducts = products.filter(p => p.flavor === selectedProduct.flavor);
+    
+    // Return unique sizes for the selected flavor
+    return sameFlavorProducts
       .map(p => ({ size: p.size, product: p }))
       .filter((item, index, self) =>
         index === self.findIndex(t => t.size === item.size)
-      )
-  );
+      );
+  });
 
   // Handle flavor selection
   function selectFlavor(flavorProduct: Product) {
     selectedProduct = flavorProduct;
     selectedImageUrl = flavorProduct.imageurl;
+    
+    // Note: We don't need to reset size selection as availableSizes will automatically
+    // update to show only sizes available for the selected flavor
   }
 
   // Handle size selection
@@ -100,7 +116,7 @@
     onkeydown={handleBackdropKeydown}
  >
     <div
-      class="bg-white rounded-lg shadow-xl max-w-3xl sm:mx-4 md:mx-8 w-full max-h-[85vh] overflow-y-auto"
+      class="bg-white rounded-md shadow-xl max-w-3xl sm:mx-4 md:mx-8 w-full max-h-[85vh] overflow-y-auto"
       role="document"
     >
       <div class="flex items-center justify-end p-3 border-gray-200">
@@ -137,8 +153,8 @@
           <div class="flex-1 space-y-4">
             <!-- Marca del producto en círculo -->
             <div class="mb-4">
-              <span class="inline-block text-black border border-black px-4 py-2 rounded-full font-semibold text-lg font-sans">
-                {selectedProduct?.brand || products[0]?.brand}
+              <span class="inline-block text-black border border-black px-3 py-1.5 rounded-lg font-semibold text-lg font-sans">
+               {selectedProduct?.brand || products[0]?.brand}
               </span>
             </div>
 
@@ -165,11 +181,11 @@
               </div>
             {/if}
 
-            {#if sizes.length > 0}
+            {#if availableSizes().length > 0}
               <div>
                 <h3 class="text-sm font-medium text-gray-900 mb-2 font-sans">Tamaño</h3>
                 <div class="flex flex-wrap gap-2" role="radiogroup" aria-label="Seleccionar tamaño">
-                  {#each sizes as { size, product }}
+                  {#each availableSizes() as { size, product }}
                     <button
                       onclick={() => selectSize(product)}
                       class="px-3 py-1 text-sm font-medium rounded-md border transition-colors font-sans {
